@@ -80,21 +80,21 @@ function concatString() {
 
 // calculator
 // remember this awesome pattern!
-function Calculator() {
-	this.currentValue = 0;
-}
+// function Calculator() {
+// 	this.currentValue = 0;
+// }
 
-(function(CP){
-	CP.method1 = function() {
-		// body
-	}
-	CP.method2 = function(val) {
-		// body
-	}
-	CP.method3 = function(val) {
-		// body
-	}
-})(Calculator.prototype);
+// (function(CP){
+// 	CP.method1 = function() {
+// 		// body
+// 	}
+// 	CP.method2 = function(val) {
+// 		// body
+// 	}
+// 	CP.method3 = function(val) {
+// 		// body
+// 	}
+// })(Calculator.prototype);
 
 // The following pattern is bad 
 // since this will overwrite all methods in this class's prototype
@@ -110,5 +110,144 @@ function Calculator() {
 // 		// body
 // 	}
 // }
+
+function Calculator() {
+	this.numStack = [];
+}
+
+(function(CP) {
+	CP.checkEmpty = function() {
+		if (this.numStack.length < 2)
+			throw "calculator is empty";
+	}
+	CP.compute = function(func) {
+		this.checkEmpty();
+		var num1 = this.numStack.pop();
+		var num2 = this.numStack.pop();
+		this.numStack.push(func(num1, num2));
+	}
+	CP.value = function() {
+		return this.numStack[this.numStack.length - 1];
+	}
+	CP.add = function() {
+		this.compute(function(a, b) {
+			return a + b;
+		});
+	}
+	CP.minus = function() {
+		this.compute(function(a, b) {
+			return a - b;
+		});
+	}
+	CP.divide = function() {
+		this.compute(function(a, b) {
+			return a / b;
+		});
+	}
+	CP.times = function() {
+		this.compute(function(a, b) {
+			return a * b;
+		});
+	}
+})(Calculator.prototype);
+
+// countWords
+function countWords(words) {
+	return words.split(' ').length;
+}
+
+// makeAdder
+function makeAdder(num1) {
+	return function(num2) {
+		return num1 + num2;
+	}
+}
+
+// forEach
+function forEach(arr, func) {
+	for (var i = 0, len = arr.length; i < len; i++)
+		func(arr[i]);
+}
+
+// map
+function map(arr, func) {
+	var newArr = [];
+	forEach(arr, function(el) {
+		newArr.push(func(el));
+	});
+	return newArr;
+}
+
+// filter
+function filter(arr, func) {
+	var newArr = [];
+	forEach(arr, function(el) {
+		if (func(el))
+			newArr.push(el);
+	});
+	return newArr;
+}
+
+// contains
+// use for in loop to access keys in a object
+function contains(arrOrObj, num) {
+	for(var key in arrOrObj)
+		if (arrOrObj.hasOwnProperty(key)) {
+			if (arrOrObj[key] === num)
+				return true;
+		}
+	}
+	return false;
+}
+
+// reduce
+function reduce(arr, startNum, reduceFunc) {
+	var currentNum = startNum;
+	forEach(arr, function(el) {
+		currentNum = reduceFunc(currentNum, el);
+	});
+	return currentNum;
+}
+
+// sums an array using reduce
+function sum(arr) {
+	return reduce(arr, 0, function(a, b){
+		return a + b;
+	})
+}
+
+// every function using reduce
+function every(arr, func) {
+	var everyChecker = function(current, next) {
+		return current && func(next);
+	}
+	return reduce(arr, true, everyChecker);
+}
+
+// any function using reduce
+function any() {
+	var anyChecker = function(current, next) {
+		return current || func(next);
+	}
+	return reduce(arr, false, anyChecker);
+
+}
+
+// once function using closure
+function once(func) {
+	var runOnce = false;
+	return function() {
+		if (!runOnce) {
+			runOnce = true;
+			func();
+		}
+	}
+}
+
+
+
+
+
+
 
 
