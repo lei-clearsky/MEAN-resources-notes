@@ -244,6 +244,22 @@ function once(func) {
 	}
 }
 
+// more examples about closure
+function functionMaker() {
+  var runTimes = 0;
+
+  return {
+    functionA: function() {
+      runTimes++;
+    },
+    functionB: function() {
+      runTimes++;
+    },
+    reportRunTimes: function() {
+      console.log(runTimes);
+    }
+  }
+}
 
 
 
