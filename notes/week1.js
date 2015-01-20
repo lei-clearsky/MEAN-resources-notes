@@ -1,6 +1,8 @@
 /*
  * Refresh key points in week 1
  */
+
+// 1/19/2015
 // loops
 
 // repeat 
@@ -261,6 +263,48 @@ function functionMaker() {
   }
 }
 
+// 1/20/2015
+// countWordsInReduce
+function countWordsInReduce(currentNum, next){
+	return currentNum + countWords(next);
+}
+
+// rewrite reduce
+function reduce(arr, startNum, func) {
+	var currentNum = startNum;
+	forEach(arr, function(el) {
+		currentNum = func(currentNum, arr[el]);
+	});
+	return currentNum;
+}
+
+// rewrite sum
+function sum(arr) {
+	var add = function(a, b) {
+		return a + b;
+	};
+	return reduce(arr, 0, add);
+}
+
+// rewrite every
+function every(arr, func) {
+	var everyFunc = function(current, next) {
+		return current && func(next);
+	}
+
+	return reduce(arr, true, everyFunc);
+}
+
+// rewrite any
+function any(arr, func) {
+	var anyFunc = function(current, next) {
+		return current || func(next);
+	}
+
+	return reduce(arr, false, everyFunc);
+}
+
+// 
 
 
 
