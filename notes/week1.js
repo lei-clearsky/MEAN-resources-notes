@@ -304,7 +304,28 @@ function any(arr, func) {
 	return reduce(arr, false, everyFunc);
 }
 
-// 
+// Pig Latin
+function translate(words) {
+	var vowel = "aeiou";
+	var index = 0;
+	var wordsArr = words.split(" ");
+	var pigWordArray = [];
+
+	wordsArr.forEach(function(word) {
+		for(var i = 0; i < word.length; i++) {
+			if(vowel.search(word[i]) !== -1) {
+				if(word[i] != "u" || (word[i] === "u" && word[i-1] !== "q")) {
+					index = i;
+					break;
+				}
+			}
+		}
+		pigWordArray.push(word.substring(index, word.length) + word.substring(0, index) + "ay");
+	});
+
+	return pigWordArray.join(" ");
+}
+
 
 
 
