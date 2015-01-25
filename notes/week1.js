@@ -327,6 +327,35 @@ function translate(words) {
 }
 
 
+//
+var getFullName = function() {
+	// this -> user
+	return [this.firstName, this.lastName].join(" ");
+}
+
+var david = {
+	firstName: "David",
+	lastName: "Yang",
+	fullName: getFullName
+}
+
+var nimit = {
+	firstName: "Nimit",
+	lastName: "Yang",
+	fullName: getFullName
+}
+
+// apply need an array as arguments
+// nimit.fullName.call(david);
+// nimit.fullName.call(david, "Mr.");
+// nimit.fullName.apply(david, ["Mr."]);
+// Function.prototype.call = function(thisArg, ..argument)
+
+//Object.create == {}
+// new keyword does following:
+// this = {}
+// this.__proto__ = User.prototoype
+
 
 
 
