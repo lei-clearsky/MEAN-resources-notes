@@ -61,3 +61,144 @@ var stringAddition = function(str) {
 	}
 	return sum;
 }
+
+// review queue and linkedlist implementation on 01/24/2015
+// implementing Queue in javascript
+function Queue() {
+	this.head = null;
+	this.tail = null;
+	this.queueObj = {};
+}
+
+Queue.prototype.enqueue = function(data){
+	if (this.head === null) {
+		this.head = 0;
+		this.tail = 0;
+	}else{
+		this.tail ++;
+	}
+	this.queueObj[this.tail] = data;
+}
+
+Queue.prototype.dequeue = function(){
+	if (this.head === null) {
+		return undefined;
+	} else if (this.head === this.tail){
+		delete this.queueObj[this.head];
+		this.head = null;
+		this.tail = null;
+	} else {
+		var deleteEl = this.queueObj[this.head];
+		delete this.queueObj[this.head];
+		this.head ++;
+		return deletedEl;
+	}
+}
+
+Queue.prototype.size = function(){
+	if(this.head === null) {
+		return 0;
+	} else {
+		return this.tail - this.head + 1;
+	}	
+}
+// implementing LinkedList in javascript
+function LinkedList(){
+	this.head = undefined;
+	this.tail = undefined;
+
+}
+
+function Node(val){
+	this.val = val;
+	this.next = null;
+	this.previous = null;
+}
+
+LinkedList.prototype.isEmpty = function(){
+	return typeof this.head === "undefined";
+}
+
+LinkedList.prototype.addToTail = function(val){
+	var newNode = new Node(val);
+	if (this.isEmpty()) {
+		this.head = this.tail = newNode;
+	} else{
+		// var currentTail = this.tail;
+		// currentTail.next = newNode;
+		// newNode.previous = currentTail;
+		// this.tail = newNode;
+		this.tail.next = newNode;
+		newNode.previous = this.tail;
+		this.tail = newNode;
+	}
+
+}
+LinkedList.prototype.addToHead = function(val){
+	var newNode = new Node(val);
+	if (this.isEmpty()) {
+		this.head = this.tail = newNode;
+	} else{
+		// var currentHead = this.head;
+		// currentHead.previous = newNode;
+		// newNode.next = currentHead;
+		// this.head = newNode;
+		this.head.previous = newNode;
+		newNode.next = this.head;
+		this.head = newNode;
+	}
+
+}
+LinkedList.prototype.removeTail = function(){
+	var deleteTail = this.tail;
+	
+	if (this.isEmpty()) {
+		return undefined;
+	} else if (this.head === this.tail) {
+
+		this.head = this.tail = undefined;
+	} else {
+		var newTail = this.tail.previous;
+		newTail.next = null;
+		this.tail = newTail;
+		// this.tail = this.tail.previous;
+		// this.tail.next = null;
+	}
+	var deleteVal = deleteTail.val;
+	delete deleteTail;
+	return deleteVal;
+
+}
+LinkedList.prototype.removeHead = function(){
+	var deleteHead = this.head;
+	
+	if (this.isEmpty()) {
+		return undefined;
+	} else if (this.head === this.tail) {
+
+		this.head = this.tail = undefined;
+	} else {
+		var newHead = this.head.next;
+		newHead.previous = null;
+		this.head = newHead;
+	}
+	var deleteVal = deleteHead.val;
+	delete deleteHead;
+	return deleteVal;
+
+}
+LinkedList.prototype.search = function(val){
+	var searchVal = this.head;
+	var searchFunc = function(val){
+		if (searchVal.val === val)
+			return val;
+		else if (searchVal.next === null)
+			return null;
+		else{
+			searchVal = searchVal.next;
+			return searchFunc(val);
+		}
+	}
+	return searchFunc(val);
+
+}
