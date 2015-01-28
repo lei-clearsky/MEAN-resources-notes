@@ -202,3 +202,182 @@ LinkedList.prototype.search = function(val){
 	return searchFunc(val);
 
 }
+// Hash Table Javascript Implementation
+function Hash() {
+	this.numBuckets = 25;
+	this.hashArr = [];
+
+}
+Hash.prototype._hash = function(key){
+	var sum = 0;
+	for (var i = 0; i < key.length; i++) {
+		sum += key.charCodeAt(i);
+	}
+	return sum % this.numBuckets;
+}
+Hash.prototype.set = function(key, value){
+
+	if (typeof key !== 'string'){
+		throw "Keys must be strings";
+	}
+	var hashResult = this._hash(key);
+	if (this.hashArr[hashResult] === undefined){
+		this.hashArr[hashResult] = new LinkedList();
+		this.hashArr[hashResult].addToHead(new HashData(key, value));
+	}else{
+		var hashLinkedList = this.hashArr[hashResult];
+		hashLinkedList.searchOrReplace(key, value);
+
+	}
+
+}
+Hash.prototype.get = function(key){
+	var hashResult = this._hash(key);
+	var returnLinkedList = this.hashArr[hashResult];
+	if (returnLinkedList.search(key)){
+		return returnLinkedList.search(key);
+	}		
+
+}
+Hash.prototype.hasKey = function(key){
+	var hashResult = this._hash(key);
+	var returnLinkedList = this.hashArr[hashResult];
+	//return returnLinkedList.search(key) === key? true: false;
+	return !!returnLinkedList.search(key);
+}
+
+function HashData(key, value){
+	this.key = key;
+	this.value = value;
+}
+
+// Linkedlist
+function LinkedList () {
+}
+
+function Node (value) {
+  this.value = value;
+  this.next = null;
+  this.previous = null;
+}
+
+function makeNode(value) {
+  return {
+    value: value,
+    next: null,
+    previous: null
+  }
+}
+
+LinkedList.prototype.isEmpty = function() {
+  return typeof this.head == "undefined";
+}
+
+LinkedList.prototype.addToTail = function(value) {
+  var nodeToAdd = new Node(value);
+  if(this.isEmpty()) {
+    this.head = nodeToAdd;
+    this.tail = nodeToAdd;
+  } else {
+    this.tail.next = nodeToAdd;
+    nodeToAdd.previous = this.tail;
+    this.tail = nodeToAdd;
+  }
+};
+
+LinkedList.prototype.addToHead = function(value) {
+  var nodeToAdd = new Node(value);
+  if(this.isEmpty()) {
+    this.head = nodeToAdd;
+    this.tail = nodeToAdd;
+  } else {
+    nodeToAdd.next = this.head;
+    this.head.previous = nodeToAdd;
+    this.head = nodeToAdd;
+  }
+};
+
+LinkedList.prototype.removeHead = function() {
+  var currentHead = this.head;
+
+  if (this.isEmpty()) {
+    // if empty
+    return undefined;
+  } else if (this.head === this.tail) {
+    // if one item in LL
+    this.head = undefined;
+    this.tail = undefined;
+  } else {
+    // if more than one item in LL
+    this.head = this.head.next;
+    this.head.previous = null;
+  }
+  var value = currentHead.value;
+  delete currentHead;
+  return value;
+};
+
+LinkedList.prototype.removeTail = function() {
+  var currentTail = this.tail;
+
+  if (this.isEmpty()) {
+    // if empty
+    return undefined;
+  } else if (this.head === this.tail) {
+    // if one item in LL
+    this.head = undefined;
+    this.tail = undefined;
+  } else {
+    // if more than one item in LL
+    this.tail = this.tail.previous;
+    this.tail.next = null;
+  }
+  var value = currentTail.value;
+  delete currentTail;
+  return value;
+};
+
+// iterative search
+LinkedList.prototype.search = function(value) {
+  var currHead = this.head;
+  while(currHead) {
+    if (currHead.value == value) {
+      return value;
+    } else {
+      currHead = currHead.next;
+    }
+  }
+  return null;
+};
+
+LinkedList.prototype.search = function(key, startNode) {
+  if (typeof startNode == "undefined") {
+    startNode = this.head;
+  }
+
+  if (startNode.value.key === key) {
+    return startNode.value.value;
+  } else if( startNode.next === null) {
+    return null;
+  } else {
+    return this.search(key, startNode.next);
+  }
+
+};
+
+LinkedList.prototype.searchOrReplace = function(key, value, startNode) {
+  if (typeof startNode == "undefined") {
+    startNode = this.head;
+  }
+
+  if (startNode.value.key === key) {
+    startNode.value.value = value;
+  } else if( startNode.next === null) {
+    this.addToHead(new HashData(key, value));
+  } else {
+    return this.search(key, value, startNode.next);
+  }
+
+};
+
+
