@@ -10,7 +10,8 @@
 	<li><a href="http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/"></a></li>
 	<li><a href = "http://teamtreehouse.com/library/harnessing-the-power-of-vim">Harnessing the Power of Vim</a></li>
 	<li><a href = "http://linuxcommand.org/">Linux Commond</a></li>
-	<li><a href = "http://www.cs.swarthmore.edu/help/vim/selection.html">vim tips and tricks</a></li>
+	<li><a href = "http://www.cs.swarthmore.edu/help/vim/selection.html">vim tips and tricks</a></li>	
+	<li><a href = "http://www.fprintf.net/vimCheatSheet.html">Vim Cheat Sheet</a></li>
 </ul>
 
 <h2>Git and Github Resources:</h2>
