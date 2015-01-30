@@ -18,3 +18,5 @@ function hash_me(value, array_size){
 <p>Hash table is expensive since it takes lots of space to store data.</p>
 <p>Collisions in Hash tables - use linkedlist or other data structure to store key value pairs with colissions.</p>
 <p>Binary Search Trees vs Hash Tables (HT becomes much more popular especially when memory gets cheaper)</p>
+<p>Add node to the head of the linkedlist because most recent node will have more chances to be retrieved. </p>
+<p>jQuery & Sizzle.js</p>
