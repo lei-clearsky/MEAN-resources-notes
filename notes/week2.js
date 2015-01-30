@@ -380,39 +380,60 @@ LinkedList.prototype.searchOrReplace = function(key, value, startNode) {
 
 };
 
-// traverseDom - workshop on 01/29/2015
+// traverseDOM - workshop on 01/29/2015
 var traverseDomAndCollectElements = function(matchFunc, startEl) {
   var resultSet = [];
   
   if (typeof startEl === "undefined") {
     startEl = document.body;
   }
+
+  // your code here
+  // traverse the DOM tree and collect matching elements in resultSet
+  // use matchFunc to identify matching elements
+
   // use level order traversel
-  var q = [];
-  var head = 0;
-  q.push(startEl);
+  // var q = [];
+  // var head = 0;
+  // q.push(startEl);
 
-  while(head <= q.length - 1){
+  // while(head <= q.length - 1){
 
-    var node = q[head];
+  //   var node = q[head];
 
-    if(matchFunc(node)){
-      resultSet.push(node);
-    }
-    if(!!node.children.length){
-      for (var i = 0; i < node.children.length; i ++) {
-        q.push(node.children[i]);
+  //   if(matchFunc(node)){
+  //     resultSet.push(node);
+  //   }
+  //   if(!!node.children.length){
+  //     for (var i = 0; i < node.children.length; i ++) {
+  //       q.push(node.children[i]);
+  //     }
+  //   }
+  //   head ++;
+  // }
+
+  // use pre-order traversal
+  function preorder(matchFunc, startEl){
+    if (matchFunc(startEl))
+      resultSet.push(startEl);
+    console.log(startEl);
+    if (!!startEl.children.length){
+      for (var i = 0; i < startEl.children.length; i ++) {
+        if (matchFunc(startEl))
+          resultSet.push(startEl.children[i]);
+        preorder(matchFunc, startEl.children[i]);
       }
     }
-    head ++;
   }
+  
+  preorder(matchFunc, startEl);
+
   return resultSet;
 };
 
 
 // detect and return the type of selector
 // return one of these types: id, class, tag.class, tag
-//
 var selectorTypeMatcher = function(selector) {
   // your code here
   var type;
@@ -435,34 +456,22 @@ var matchFunctionMaker = function(selector) {
   var matchFunction;
   if (selectorType === "id") {
     // define matchFunction for id
-
     matchFunction = function (el) {
-      if(el.id === selector.slice(1))
-        return true;
-      else
-        return false;
-      //return el.id === selectorType;
+      return el.id === selector.slice(1);
     } 
 
   } else if (selectorType === "class") {
     // define matchFunction for class
      matchFunction = function (el) {
-      if(el.classList.contains(selector.slice(1)))
-        return true;
-      else
-        return false;
-      //return el.id === selectorType;
+      return el.classList.contains(selector.slice(1));
     }    
   } else if (selectorType === "tag.class") {
     // define matchFunction for tag.class
     matchFunction = function (el) {
+      
+      var selectorEls = selector.split('.');
+      return el.tagName.toLowerCase() === selectorEls[0] && el.classList.contains(selectorEls[1]);
 
-      var newEl = el.tagName+'.'+el.className;
-
-      if(newEl.toLowerCase() === selector.toLowerCase())
-        return true;
-      else
-        return false;
     }     
   } else if (selectorType === "tag") {
     // define matchFunction for tag
@@ -474,11 +483,8 @@ var matchFunctionMaker = function(selector) {
 };
 
 var $ = function(selector) {
-  var elements;
-  var selectorMatchFunc = matchFunctionMaker(selector);
-  elements = traverseDomAndCollectElements(selectorMatchFunc);
-  return elements;
+  	var elements;
+  	var selectorMatchFunc = matchFunctionMaker(selector);
+  	elements = traverseDomAndCollectElements(selectorMatchFunc);
+  	return elements;
 };
-
-
-
