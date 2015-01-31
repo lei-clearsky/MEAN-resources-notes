@@ -392,7 +392,7 @@ var traverseDomAndCollectElements = function(matchFunc, startEl) {
   // traverse the DOM tree and collect matching elements in resultSet
   // use matchFunc to identify matching elements
 
-  // use level order traversel
+  // solution 1 : use level order traversel
   // var q = [];
   // var head = 0;
   // q.push(startEl);
@@ -412,21 +412,37 @@ var traverseDomAndCollectElements = function(matchFunc, startEl) {
   //   head ++;
   // }
 
-  // use pre-order traversal
-  function preorder(matchFunc, startEl){
-    if (matchFunc(startEl))
-      resultSet.push(startEl);
-    console.log(startEl);
-    if (!!startEl.children.length){
-      for (var i = 0; i < startEl.children.length; i ++) {
-        if (matchFunc(startEl))
-          resultSet.push(startEl.children[i]);
-        preorder(matchFunc, startEl.children[i]);
-      }
+  //solution 2: use pre-order traversal
+  // function preorder(matchFunc, startEl){
+  //   if (matchFunc(startEl))
+  //     resultSet.push(startEl);
+  //   console.log(startEl);
+  //   if (!!startEl.children.length){
+  //     for (var i = 0; i < startEl.children.length; i ++) {
+  //       if (matchFunc(startEl))
+  //         resultSet.push(startEl.children[i]);
+  //       preorder(matchFunc, startEl.children[i]);
+  //     }
+  //   }
+  // }
+  
+  // preorder(matchFunc, startEl);
+
+  //solution 3: walkTheDom by Douglas Crockford
+  //http://www.javascriptcookbook.com/article/Traversing-DOM-subtrees-with-a-recursive-walk-the-DOM-function
+  function walkTheDOM(node, func) {
+    console.log('check');
+    if (func(node)){
+      resultSet.push(node);
+    }
+    node = node.firstChild;
+    while (node) {
+        walkTheDOM(node, func);
+        node = node.nextSibling;
     }
   }
-  
-  preorder(matchFunc, startEl);
+
+  walkTheDOM(startEl, matchFunc);
 
   return resultSet;
 };
@@ -434,6 +450,7 @@ var traverseDomAndCollectElements = function(matchFunc, startEl) {
 
 // detect and return the type of selector
 // return one of these types: id, class, tag.class, tag
+//
 var selectorTypeMatcher = function(selector) {
   // your code here
   var type;
@@ -456,6 +473,7 @@ var matchFunctionMaker = function(selector) {
   var matchFunction;
   if (selectorType === "id") {
     // define matchFunction for id
+
     matchFunction = function (el) {
       return el.id === selector.slice(1);
     } 
@@ -463,28 +481,39 @@ var matchFunctionMaker = function(selector) {
   } else if (selectorType === "class") {
     // define matchFunction for class
      matchFunction = function (el) {
-      return el.classList.contains(selector.slice(1));
+      if (el.nodeType === 3)
+        return false;
+      else{
+        return el.classList.contains(selector.slice(1));
+      }
     }    
   } else if (selectorType === "tag.class") {
     // define matchFunction for tag.class
     matchFunction = function (el) {
-      
-      var selectorEls = selector.split('.');
-      return el.tagName.toLowerCase() === selectorEls[0] && el.classList.contains(selectorEls[1]);
-
+      if (el.nodeType === 3)
+        return false;
+      else{      
+        var selectorEls = selector.split('.');
+        return el.tagName.toLowerCase() === selectorEls[0] && el.classList.contains(selectorEls[1]);
+      }
     }     
   } else if (selectorType === "tag") {
     // define matchFunction for tag
     matchFunction = function (el) {
-      return el.tagName.toLowerCase() === selector.toLowerCase();
+      if (el.nodeType === 3)
+        return false;
+      else{
+        return el.tagName.toLowerCase() === selector.toLowerCase();
+      }
     }     
   }
   return matchFunction;
 };
 
 var $ = function(selector) {
-  	var elements;
-  	var selectorMatchFunc = matchFunctionMaker(selector);
-  	elements = traverseDomAndCollectElements(selectorMatchFunc);
-  	return elements;
+  var elements;
+  var selectorMatchFunc = matchFunctionMaker(selector);
+  elements = traverseDomAndCollectElements(selectorMatchFunc);
+  return elements;
 };
+
