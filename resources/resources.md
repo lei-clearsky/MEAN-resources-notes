@@ -12,6 +12,9 @@
 	<li><a href = "http://linuxcommand.org/">Linux Commond</a></li>
 	<li><a href = "http://www.cs.swarthmore.edu/help/vim/selection.html">vim tips and tricks</a></li>	
 	<li><a href = "http://www.fprintf.net/vimCheatSheet.html">Vim Cheat Sheet</a></li>
+	<li><a href = "http://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/">Vim text objects</a></li>
+	<li><a href = "http://www.tldp.org/LDP/GNU-Linux-Tools-Summary/html/x1712.htm">Linux Tools Summary</a></li>
+
 </ul>
 
 <h2>Git and Github Resources:</h2>
@@ -25,6 +28,8 @@
 	<li><a href = "http://www.regexr.com/">Regexr</a></li>
 	<li><a href = "http://repl.it/languages/JavaScript">Repl.it</a></li>
 	<li><a href = "http://beyondgrep.com/">ack!</a></li>
+	<li><a href = "http://scriptular.com/">scriptular.com</a></li>
+
 
 </ul>
 
