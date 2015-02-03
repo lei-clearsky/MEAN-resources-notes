@@ -112,45 +112,6 @@ GameOfLife.prototype.step = function () {
 			}
 		};
 	});
-	/*
-	for (var y = 0; y < this.height; y ++){
-		for (var x = 0; x < this.width; x ++){
-			var cellXY = document.getElementById(x + '-' + y);
-			if (cellXY.getAttribute('data-status') == 'alive'){
-				var liveCount = 0;
-				for (var i = x - 1; i <= x + 1; i ++){
-						for (var j = y - 1; j <= y +1; j ++){
-							var cellNeighbor = document.getElementById(i + '-' + j);
-							if (cellNeighbor){	
-								if (cellNeighbor.getAttribute('data-status') == 'alive')
-									liveCount ++;
-							}
-						}
-				}
-				if (liveCount < 3 || liveCount > 4){
-					cellXY.setAttribute('data-status', 'dead');
-					cellXY.className = 'dead';
-				}
-			}
-			if (cellXY.getAttribute('data-status') == 'dead'){
-				var liveCount = 0;
-				for (var i = x - 1; i <= x + 1; i ++){
-						for (var j = y - 1; j <= y +1; j ++){
-							var cellNeighbor = document.getElementById(i + '-' + j);
-							if(cellNeighbor){
-								if (cellNeighbor.getAttribute('data-status') == 'alive')
-									liveCount ++;
-							}
-						}
-				}
-				if (liveCount == 3){
-					cellXY.setAttribute('data-status', 'alive');
-					cellXY.className = 'alive';
-				}
-			}
-		}
-	}
-	*/
 };
 /*
 GameOfLife.prototype.step = function () {
