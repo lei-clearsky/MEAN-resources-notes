@@ -218,3 +218,5 @@ function mergeSort(arr) {
 
   return merge(leftSorted, rightSorted);
 }
+// Game of Life workshop
+// https://github.com/lei-clearsky/FS-Game-of-Life
