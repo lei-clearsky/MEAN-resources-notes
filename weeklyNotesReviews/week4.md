@@ -17,7 +17,7 @@
 <h2>Questions</h2>
 <p>JavaScript originally had no concept of modules. Entire .js files could be combined by the browser in a single web page via 'script' tags, but one JS file could not import specific parts of another file in a controlled way.</p>
 <p>Asynchronous functions</p>
-'''javascript
+```javascript
 var someAsyncTask = function(callback) {
 	var randTime = Math.floor(Math.random() * 1000);
 	setTimeout(function(){
@@ -36,4 +36,4 @@ for (var i = 0; i < 5; i++) {
 		}
 	})
 }
-'''
+```
