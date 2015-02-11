@@ -3,6 +3,9 @@
 	<li><a href = "http://teamtreehouse.com/library/ajax-basics">Ajax Basics</a></li>
 	<li><a href = "https://www.youtube.com/watch?v=PMfcsYzj-9M">The Definitive Guide to Object-Oriented JavaScript</a></li>
 	<li><a href = "http://eloquentjavascript.net/">Eloquent JavaScript</a></li>
+	<li><a href = "https://pragprog.com/book/tbajs/async-javascript">sync Javascript: Build More Responsive Apps with Less Code</a></li>
+	<li><a href = "http://stevehanov.ca/blog/index.php?id=127">Async JS</a></li>
+
 </ul>
 
 <h2>Linux Command and Vim</h2>
@@ -21,6 +24,8 @@
 <ul>
 	<li>Try <a href="https://github.com/Gazler/githug">githug</a></li>
 	<li><a href="https://github.com/tiimgreen/github-cheat-sheet">GitHub Cheat Sheet</a></li>
+  <li><a href="https://help.github.com/articles/markdown-basics/">GitHub Markdown</a></li>
+
 </ul>
 
 <h2>Tools</h2>
