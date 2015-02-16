@@ -77,6 +77,18 @@ WHERE actors.first_name = 'Kevin' AND actors.last_name = 'Bacon'
 
 ## 11. Immortal Actors
 ``` sql
+SELECT actors.first_name, actors.last_name, actors.id 
+FROM actors 
+JOIN roles ON actors.id = roles.actor_id 
+JOIN movies ON roles.movie_id = movies.id 
+WHERE movies.year < 1900 AND actors.id IN 
+(
+SELECT actors.id FROM actors 
+JOIN roles ON actors.id = roles.actor_id 
+JOIN movies ON roles.movie_id = movies.id 
+WHERE movies.year > 2000
+)
+GROUP BY actors.id;
 ```
 
 
