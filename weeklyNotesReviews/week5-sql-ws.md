@@ -60,7 +60,7 @@ JOIN movies ON movies.id = movies_genres.movie_id
 WHERE movies_genres.genre = 'Film-Noir' AND movies.year % 4 = 0;
 ```
 
-## 10. BacON (Error!)
+## 10. Bacon
 ``` sql
 SELECT movies.name, actors.first_name, actors.last_name FROM actors 
 JOIN roles ON actors.id = roles.actor_id 
