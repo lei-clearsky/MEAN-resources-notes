@@ -47,7 +47,11 @@ select directors.first_name, directors.last_name, movies.name, movies.year from 
 
 ## 10. Bacon (Error!)
 ``` sql
-select movies.name, actors.first_name, actors.last_name from actors join roles on actors.id = roles.actor_id join movies on roles.movie_id = movies.id join movies_genres on movies.id = movies_genres.movie_id where actors.first_name = 'Kevin' and actors.last_name = 'Bacon' and movies_genres.genre = 'Drama';
+select movies.name, actors.first_name, actors.last_name from actors join roles on actors.id = roles.actor_id join movies on roles.movie_id = movies.id join movies_genres on movies.id = movies_genres.movie_id where movies_genres.genre = 'Drama' and movies.id in
+(
+select movies.id from movies join roles on movies.id = roles.movie_id join actors on roles.actor_id = actors.id where actors.first_name = 'Kevin' and actors.last_name = 'Bacon'
+);
+
 ```
 
 ## 11. Immortal Actors
