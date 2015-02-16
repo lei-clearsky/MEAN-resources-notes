@@ -40,7 +40,25 @@ select genre, count(*) as num_movies from movies_genres group by genre order by 
 select actors.id, actors.first_name, actors.last_name from actors join roles on actors.id = roles.actor_id join movies on roles.movie_id = movies.id and movies.name="Braveheart" and movies.year=1995;
 ```
 
-## 9. Leap Noir (Error!)
+## 9. Leap Noir
 ``` sql
-select directors.first_name, directors.last_name, movies.name, movies.year from directors join movies_directors on directors.id = movies_directors.director_id join directors_genres on directors.id = directors_genres.director_id join movies on movies.id = movies_directors.movie_id where directors_genres.genre = 'Film-Noir' and movies.year % 4 = 0;
+select directors.first_name, directors.last_name, movies.name, movies.year from directors join movies_directors on directors.id = movies_directors.director_id join movies_genres on movies_directors.movie_id = movies_genres.movie_id join movies on movies.id = movies_genres.movie_id where movies_genres.genre = 'Film-Noir' and movies.year % 4 = 0;
+```
+
+## 10. Bacon (Error!)
+``` sql
+select movies.name, actors.first_name, actors.last_name from actors join roles on actors.id = roles.actor_id join movies on roles.movie_id = movies.id join movies_genres on movies.id = movies_genres.movie_id where actors.first_name = 'Kevin' and actors.last_name = 'Bacon' and movies_genres.genre = 'Drama';
+```
+
+## 11. Immortal Actors
+``` sql
+```
+
+
+## 12. Busy Filming
+``` sql
+```
+
+## 13. ♀
+``` sql
 ```
