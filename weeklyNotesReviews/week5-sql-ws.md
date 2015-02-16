@@ -1,55 +1,76 @@
 ## 1. Car
 ``` sql
-select * from movies where name like 'Car %';
+SELECT * FROM movies WHERE name LIKE 'Car %';
 ```
 
 ## 2. Birthyear
 ``` sql
-select * from movies where year=1985;
+SELECT * FROM movies WHERE year=1985;
 ```
 
 ## 3. 1982
 ``` sql
-select count(*) as count from movies where year=1982;
+SELECT COUNT(*) as count FROM movies WHERE year=1982;
 ```
 
 ## 4. Stacktors
 ``` sql
-select * from actors where last_name like '%stack%';
+SELECT * FROM actors WHERE last_name LIKE '%stack%';
 ```
 
 ## 5. Fame Name Game
 ``` sql
-select count(*), first_name from actors group by first_name order by count(*) desc limit 10;
+SELECT COUNT(*), first_name FROM actors 
+GROUP BY first_name 
+ORDER BY COUNT(*) DESC LIMIT 10;
 
-select count(*), last_name from actors group by last_name order by count(*) desc limit 10;
+SELECT COUNT(*), last_name FROM actors 
+GROUP BY last_name 
+ORDER BY COUNT(*) DESC LIMIT 10;
 ```
 
 ## 6. Prolific
 ``` sql
-select actors.first_name, actors.last_name, count(*) from actors join roles on actors.id = roles.actor_id group by roles.actor_id order by count(*) desc limit 100;
+SELECT actors.first_name, actors.last_name, COUNT(*) FROM actors 
+JOIN roles ON actors.id = roles.actor_id 
+GROUP BY roles.actor_id 
+ORDER BY COUNT(*) DESC LIMIT 100;
 ```
 
 ## 7. Bottom of the Barrel
 ``` sql
-select genre, count(*) as num_movies from movies_genres group by genre order by num_movies asc;
+SELECT genre, COUNT(*) as num_movies FROM movies_genres GROUP BY genre 
+ORDER BY num_movies asc;
 ```
 
 ## 8. Braveheart
 ``` sql
-select actors.id, actors.first_name, actors.last_name from actors join roles on actors.id = roles.actor_id join movies on roles.movie_id = movies.id and movies.name="Braveheart" and movies.year=1995;
+SELECT actors.id, actors.first_name, actors.last_name FROM actors 
+JOIN roles ON actors.id = roles.actor_id 
+JOIN movies ON roles.movie_id = movies.id 
+WHERE movies.name="Braveheart" AND movies.year=1995;
 ```
 
 ## 9. Leap Noir
 ``` sql
-select directors.first_name, directors.last_name, movies.name, movies.year from directors join movies_directors on directors.id = movies_directors.director_id join movies_genres on movies_directors.movie_id = movies_genres.movie_id join movies on movies.id = movies_genres.movie_id where movies_genres.genre = 'Film-Noir' and movies.year % 4 = 0;
+SELECT directors.first_name, directors.last_name, movies.name, movies.year FROM directors 
+JOIN movies_directors ON directors.id = movies_directors.director_id 
+JOIN movies_genres ON movies_directors.movie_id = movies_genres.movie_id 
+JOIN movies ON movies.id = movies_genres.movie_id 
+WHERE movies_genres.genre = 'Film-Noir' AND movies.year % 4 = 0;
 ```
 
-## 10. Bacon (Error!)
+## 10. BacON (Error!)
 ``` sql
-select movies.name, actors.first_name, actors.last_name from actors join roles on actors.id = roles.actor_id join movies on roles.movie_id = movies.id join movies_genres on movies.id = movies_genres.movie_id where movies_genres.genre = 'Drama' and movies.id in
+SELECT movies.name, actors.first_name, actors.last_name FROM actors 
+JOIN roles ON actors.id = roles.actor_id 
+JOIN movies ON roles.movie_id = movies.id 
+JOIN movies_genres ON movies.id = movies_genres.movie_id WHERE movies_genres.genre = 'Drama' AND movies.id IN
 (
-select movies.id from movies join roles on movies.id = roles.movie_id join actors on roles.actor_id = actors.id where actors.first_name = 'Kevin' and actors.last_name = 'Bacon'
+SELECT movies.id FROM movies 
+JOIN roles ON movies.id = roles.movie_id 
+JOIN actors ON roles.actor_id = actors.id 
+WHERE actors.first_name = 'Kevin' AND actors.last_name = 'Bacon'
 );
 
 ```
