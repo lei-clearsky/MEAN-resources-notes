@@ -106,5 +106,14 @@ ORDER BY movies.name ASC;
 
 ## 13. ♀
 ``` sql
-
+SELECT m.year, COUNT(1) as femaleOnlyMovies
+FROM movies m
+WHERE NOT EXISTS
+(
+SELECT 1 FROM roles r
+INNER JOIN actors a ON a.id = r.actor_id
+WHERE r.movie_id = m.id
+AND a.gender = 'M'
+)
+GROUP BY m.year;
 ```
