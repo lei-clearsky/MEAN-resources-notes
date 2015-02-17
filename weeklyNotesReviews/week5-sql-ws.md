@@ -94,8 +94,17 @@ GROUP BY actors.id;
 
 ## 12. Busy Filming
 ``` sql
+SELECT actors.first_name, actors.last_name, COUNT(DISTINCT roles.role) AS role_count, movies.name 
+FROM actors
+INNER JOIN roles ON actors.id = roles.actor_id
+INNER JOIN movies ON roles.movie_id = movies.id
+WHERE movies.year > 1900
+GROUP BY roles.actor_id, roles.movie_id
+HAVING role_count >= 5
+ORDER BY movies.name ASC;
 ```
 
 ## 13. ♀
 ``` sql
+
 ```
