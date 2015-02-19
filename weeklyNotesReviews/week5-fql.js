@@ -54,7 +54,7 @@ FQL.prototype.limit = function(limitLen) {
 }
 
 FQL.prototype.where = function(searchObj) {
-	var tempData = this.data;
+	var thisData = this.data;
 	var searchResult = [];
 	var searchQueryArr = [];
 	// for (var key in searchObj) {
@@ -72,7 +72,7 @@ FQL.prototype.where = function(searchObj) {
 	// }
 
 
-	forEach(tempData, function(obj) {
+	forEach(thisData, function(obj) {
 		for (var key in searchObj) {
 			if (typeof searchObj[key] === 'function') {
 				searchQueryArr.push(searchObj[key](obj[key]));
@@ -94,7 +94,22 @@ FQL.prototype.where = function(searchObj) {
 	return this;
 }
 
+FQL.prototype.select = function(selectArr) {
+	var thisData = this.data;
+	var selectedData = [];
 
+	forEach(thisData, function(obj){
+		var selectedObj = {};
+		for (var i = 0; i < selectArr.length; i ++) {
+			selectedObj[selectArr[i]] = obj[selectArr[i]];
+		}
+		selectedData.push(selectedObj);
+			
+	});
+
+	this.data = selectedData;
+	return this;
+}
 
 
 
