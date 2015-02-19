@@ -111,6 +111,22 @@ FQL.prototype.select = function(selectArr) {
 	return this;
 }
 
+FQL.prototype.order = function(orderStr) {
+	var thisData = this.data;
+	thisData.sort(function (a, b) {
+	  if (a[orderStr] > b[orderStr]) {
+	    return 1;
+	  }
+	  if (a[orderStr] < b[orderStr]) {
+	    return -1;
+	  }
+	  // a must be equal to b
+	  return 0;
+	});
+	this.data = thisData;
+	return this;
+}
+
 
 
 
