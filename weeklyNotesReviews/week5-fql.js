@@ -72,26 +72,69 @@ FQL.prototype.where = function(searchObj) {
 	// }
 
 
-	forEach(thisData, function(obj) {
-		for (var key in searchObj) {
-			if (typeof searchObj[key] === 'function') {
-				searchQueryArr.push(searchObj[key](obj[key]));
+	// forEach(thisData, function(obj) {
+	// 	for (var key in searchObj) {
+	// 		if (typeof searchObj[key] === 'function') {
+	// 			searchQueryArr.push(searchObj[key](obj[key]));
 
-			} else {
-				searchQueryArr.push(obj[key] === searchObj[key]);
-			}
-		}
-		if (every(searchQueryArr, function(next){
-			return next;
-		})){
-			searchResult.push(obj);
-		}
-		searchQueryArr = [];
+	// 		} else {
+	// 			searchQueryArr.push(obj[key] === searchObj[key]);
+	// 		}
+	// 	}
+
+	// 	if (every(searchQueryArr, function(next){
+	// 		return next;
+	// 	})){
+	// 		searchResult.push(obj);
+	// 	}
+	// 	searchQueryArr = [];
 			
-	});
-	// console.log(searchResult);
-	this.data = searchResult;
+	// });
+	// // console.log(searchResult);
+	// this.data = searchResult;
+	// return this;
+
+
+	for (var key in searchObj) {
+		if (typeof searchObj[key] === 'function') {
+			searchQueryArr = [];
+			forEach(this.data, function(obj) {
+				if (searchObj[key](obj[key])) {
+					searchQueryArr.push(obj);
+				}
+			});
+			this.data = searchQueryArr;
+		} else {
+			searchQueryArr = [];
+			forEach(this.data, function(obj) {
+				if (obj[key] === searchObj[key]) {
+					searchQueryArr.push(obj);
+				}
+			});
+			this.data = searchQueryArr;
+		}
+	}
+
+	// for (var key in searchObj) {
+	// 	if (typeof searchObj[key] === 'function') {
+	// 		reduceData(searchObj[key](obj[key]));
+	// 	} else {
+	// 		reduceData(searchObj[key](obj[key]));
+	// 	}
+	// }
+
+	// function reduceData (statement) {
+	// 	searchQueryArr = [];
+	// 	forEach(this.data, function(obj) {
+	// 		if (statement]) {
+	// 			searchQueryArr.push(obj);
+	// 		}
+	// 	});
+	// 	this.data = searchQueryArr;
+	// }
+
 	return this;
+
 }
 
 FQL.prototype.select = function(selectArr) {
