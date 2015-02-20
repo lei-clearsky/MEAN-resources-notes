@@ -93,7 +93,8 @@ FQL.prototype.where = function(searchObj) {
 	// // console.log(searchResult);
 	// this.data = searchResult;
 	// return this;
-
+	
+	//var indexTableIndex = this.data.length - 1;
 
 	for (var key in searchObj) {
 		if (typeof searchObj[key] === 'function') {
@@ -105,12 +106,22 @@ FQL.prototype.where = function(searchObj) {
 			});
 			this.data = searchQueryArr;
 		} else {
+			this.getIndicesOf(key, searchObj[key]);
+			// if (this.data[indexTableIndex][key] !== undefined) {
+			// 	console.log('check index table');
+			// 	var indexSearch = this.data[indexTableIndex][key];
+			// 	forEach(indexSearch, function (indexNum) {
+			// 		searchQueryArr.push(this.data[indexNum]);
+			// 	});
+			// } else {
 			searchQueryArr = [];
 			forEach(this.data, function(obj) {
 				if (obj[key] === searchObj[key]) {
 					searchQueryArr.push(obj);
 				}
 			});
+			// }
+
 			this.data = searchQueryArr;
 		}
 	}
@@ -198,8 +209,34 @@ FQL.prototype.left_join = function(tableArr, func) {
 	return this;
 }
 
+FQL.prototype.addIndex = function(indexName) {
+	var indexTable = {};
+	indexTable[indexName] = {};
 
+	for (var i = 0; i < this.data.length; i ++) {
 
+		var newIndexKey = this.data[i][indexName].toString();
+
+		if (indexTable[indexName][newIndexKey] !== undefined) {
+			indexTable[indexName][newIndexKey].push(i);
+		} else {
+			indexTable[indexName][newIndexKey] = [];
+			indexTable[indexName][newIndexKey].push(i);
+		}		
+	}
+	this.data.push(indexTable);
+	return this;
+}
+
+FQL.prototype.getIndicesOf = function (indexTable, key) {
+	var indexTableIndex = this.data.length - 1;
+	if (this.data[indexTableIndex][indexTable] == undefined) {
+		return undefined;
+	} else {
+		return this.data[indexTableIndex][indexTable][key];
+	}
+		
+}
 
 
 
