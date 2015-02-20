@@ -170,6 +170,34 @@ FQL.prototype.order = function(orderStr) {
 	return this;
 }
 
+FQL.prototype.left_join = function(tableArr, func) {
+	
+	var thisData = this.data;
+	var resultData = [];
+	forEach(thisData, function(obj){
+		forEach(tableArr.data, function(obj2){
+			if (func(obj, obj2)) {
+				resultData.push(merge(obj, obj2));
+			}
+				
+		});
+	});
+	
+	// for (var i = 0; i < thisData.length; i++){
+	// 	//console.log('table array length is ' , tableArr);
+	// 	for (var j = 0; j < tableArr.data.length; j++){
+	// 		//console.log('test');
+	// 		if (func(thisData[i], tableArr.data[j])) {
+	// 			resultData.push(merge(thisData[i], tableArr.data[j]));
+	// 			//console.log('obj: ' + thisData[i]);
+	// 		}	
+	// 	}			
+	// }
+
+	this.data = resultData;
+	return this;
+}
+
 
 
 
