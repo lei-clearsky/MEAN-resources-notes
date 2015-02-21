@@ -1,4 +1,4 @@
-// Place your code here:
+// Lei's solution
 
 // Adds properties of obj2 into obj1
 function merge(obj1, obj2) {
@@ -103,8 +103,7 @@ FQL.prototype.where = function(searchObj) {
 			var indices = this.getIndicesOf(key, searchObj[key]);
 			var thisData = this.data;
 			searchQueryArr = [];
-			forEach(indices, function(index) {
-				
+			forEach(indices, function(index) {				
 				searchQueryArr.push(thisData[index]);
 			})
 			this.data = searchQueryArr;
@@ -121,11 +120,12 @@ FQL.prototype.where = function(searchObj) {
 
 				searchQueryArr = [];
 				forEach(this.data, function(obj) {
+					// if (obj[key] === searchObj[key]) {
 					if (obj[key] === searchObj[key]) {
 						searchQueryArr.push(obj);
 					}
 				});
-
+				//console.log(this.data);
 				this.data = searchQueryArr;
 			}
 		}
@@ -253,7 +253,7 @@ FQL.prototype.addIndex = function(indexName) {
 	var indexTable = {};
 	//indexTable[indexName] = {};
 
-	for (var i = 0; i < indexTableIndex; i ++) {
+	for (var i = 0; i < indexTableIndex + 1; i ++) {
 
 		var newIndexKey = this.data[i][indexName];
 
@@ -279,6 +279,145 @@ FQL.prototype.getIndicesOf = function (indexTable, key) {
 		
 }
 
+// Norman's solution
 
+// Place your code here:
+
+// Adds properties of obj2 into obj1
+function merge(obj1, obj2) {
+   for (var key in obj2) {
+        obj1[key] = obj2[key]
+      };
+      return obj1;
+};
+
+
+var FQL = function(data) {
+    this.data = data;
+};
+
+FQL.prototype.exec = function() {
+    return this.data
+};
+
+FQL.prototype.count = function() {
+    return this.data.length;
+};
+
+FQL.prototype.limit = function(val) {
+    this.data = this.data.slice(0, val);
+    return this;
+};
+
+FQL.prototype.where = function(searchObj) {    
+    var resultsArr = [];
+    var tempArr = [];
+    
+    for (var key in searchObj) {
+        if (this[key]) {
+            for (var key in searchObj) {
+                 tempArr = this.getIndicesOf(key, searchObj[key].toString());
+            };
+            for (var i = 0; i < tempArr.length; i++) {
+                resultsArr.push(this.data[i]);
+            }
+            this.data = resultsArr;
+        }
+        else if (typeof searchObj[key] === 'function') {
+            resultsArr = [];
+            this.data.forEach(function(obj) {
+                if (searchObj[key](obj[key])) {
+                    resultsArr.push(obj);
+                };
+            });
+            this.data = resultsArr;
+        }
+        else {
+            resultsArr = [];
+            this.data.forEach(function(obj) {
+                if (obj[key] === searchObj[key]) {
+                    resultsArr.push(obj);
+                };
+            });
+
+            this.data = resultsArr;
+        }
+    }
+    return this;
+};
+
+
+FQL.prototype.select = function(arr) {    
+    var tempData = [];
+    this.data.forEach(function(obj) {
+        var objTemp = {};
+        for (var i = 0; i < arr.length; i++) {
+            objTemp[arr[i]] = obj[arr[i]];            
+        }
+        tempData.push(objTemp);        
+    });
+    this.data = tempData;
+    return this;
+};
+
+FQL.prototype.order = function(key) {
+    var tempData = [];
+    this.data.sort(function(a, b) {
+        // if (a[key] > b[key]) {
+        //     return 1;
+        // }
+        // else if (a[key] < b[key]) {
+        //     return -1;
+        // }
+        // return 0;
+        return a[key] - b[key];
+    });
+    return this;
+};
+
+FQL.prototype.left_join = function(table, func) {
+    var dataResult = [];
+    this.data.forEach(function(obj) {
+        table.data.forEach(function(obj2) {
+            if (func(obj, obj2)) {
+                dataResult.push(merge(obj2,obj));
+            }
+        });
+    });
+    this.data = dataResult;
+    return this;
+};
+
+FQL.prototype.addIndex = function(index) {
+    var dataResult = [];
+    var data = this.data;
+    var i = 0;
+    this.data.forEach(function(obj) {
+            var key = obj[index];
+            var tempObj = {}
+            tempObj[key] = i;
+            dataResult.push(tempObj);    
+            i++;
+    });    
+    this[index] = dataResult;        
+}
+
+FQL.prototype.getIndicesOf = function(index, value) {
+    var indexResult = [];
+    var indexTemp = this[index];
+    if (indexTemp === undefined) {
+        return undefined;
+    }
+    else {
+        indexTemp.forEach(function(obj) {
+            for (var key in obj) {
+                if (key === value) {
+                    indexResult.push(obj[key])
+                };
+            };
+        });
+        return indexResult;
+    };
+};
 
 
