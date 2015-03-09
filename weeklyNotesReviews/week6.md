@@ -56,3 +56,38 @@ Tweet.find({where: {text: 'Blafhapweoif'}})
 ## Tools
 ## Mongoose
 - node mongo driver
+
+# Schema Design
+
+# Testing
+``` javascript
+// "models"
+function convertToC(f) {
+    return (f - 32) * (5 / 9);
+}
+
+function convertToF(c) {
+    return (c * (9 / 5)) + 32;
+}
+
+//server
+
+var express = require('express')
+var app = module.exports = express()
+
+app.param('temp', function(req, res, next, temp) {
+    req.temp = parseFloat(temp)
+      if(isNaN(req.temp)) return res.send(400)
+          next()
+})
+
+app.get('/f/:temp', function(req, res) {
+    res.json(convertToF(req.temp))
+})
+
+app.get('/c/:temp', function(req, res) {
+    res.json(convertToC(req.temp))
+})
+
+app.listen(3000)
+```
