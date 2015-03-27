@@ -1,8 +1,8 @@
-#Ajax
-#CORS request
-#JSONP
-#Trip Planner Persistence
-#Trip Planner Persistence Review
+Ajax
+CORS request
+JSONP
+Trip Planner Persistence
+Trip Planner Persistence Review
 * RESTful
   * [Representational State Transfer (REST) is an architectural style that specifies constraints, such as the uniform interface, that if applied to a web service induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web.](http://docs.oracle.com/javaee/6/tutorial/doc/gijqy.html)
   * RESTful Patterns
